@@ -37,7 +37,39 @@ $stmt = $db->prepare("INSERT INTO file (filename, description, author, tags, dat
 
 }
 
+?>
 
+<style>
+
+table {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  	border-collapse: collapse;
+  	width: 100%;
+	  }
+	  
+	  td, th {
+		border: 1px solid #ddd;
+  		padding: 8px;
+	  }
+	
+
+	  tr:hover{
+		background-color: #ddd;
+	  }
+
+	  th{
+		padding-top: 12px;
+  		padding-bottom: 12px;
+ 		text-align: left;
+  		background-color: #32addd;
+ 		color: white;
+	  }
+
+}
+
+</style>
+
+<?php
 
 //Function that displays all the uploaded files
 function viewAllFiles($db) {
