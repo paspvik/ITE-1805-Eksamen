@@ -31,50 +31,14 @@
 
 <?php
 
-$servername = 'kark.uit.no';
-$username = 'stud_v19_aspvikp';
-$password = 'mariadb@uit';
-$dbname = 'stud_v19_aspvikp';
+ #Including the class
+ include_once('../Classes/comment.php');
+
+ #Initializing the edit comment method
+ $object = new Comment();
+ $object->Edit_comment();
 
 
-try{
-
-    #Checking if there is an ID in the url
-    if (isset($_GET['id'])) {
-        #Getting the ID from the url
-        $comID = $_GET['id']; 
-
-        $con = new PDO("mysql:host=$servername;dbname=$dbname", $username,
-        $password);
-
-        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        #Checking if new comment is posted, if so it updates the chosen comment
-        if(isset($_POST['editcomment'])) {
-            $stmt = $con->prepare('UPDATE comments SET comment=:comment WHERE comID = :comID'); 
-            $stmt-> bindParam(':comment', $_POST['editcomment']);
-            $stmt-> bindParam(':comID', $comID);
-            $stmt->execute();
-            echo "Edit was a succsess";
-            }
-        
-
-
-
-
-    } else {
-        echo '<h1>Something went wrong, please try again</h1>';
-        echo '<a href="member.php">Go back to member page</a>';
-    }
-
-}
-
-
-catch(PDOException $e)
-{
-    echo "Error: " . $e->getMessage();
-}
-$con = null;
 
 ?>
 

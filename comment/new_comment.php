@@ -40,40 +40,12 @@
 
 
    <?php
+     #Including the class
+    include_once('../Classes/comment.php');
 
-    $servername = 'kark.uit.no';
-    $username = 'stud_v19_aspvikp';
-    $password = 'mariadb@uit';
-    $dbname = 'stud_v19_aspvikp';
-
-    #FJERNE MAIL FRA SKEJMA?!?!?!?!?!?!?!?!?!?!?!?!?!?!??!?????!!!! SESSION_USER ISTEDENFOR?!
-
-    try {
-
-        $con = new PDO("mysql:host=$servername;dbname=$dbname", $username,
-        $password);
-
-         // set the PDO error mode to exception
-         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-         
-
-         #Checking if the user has completed the form
-         if(isset($_POST['name'],$_POST['email'], $_POST['comment'])) {
-            $stmt = $con->prepare('INSERT INTO comments (comment,status) VALUES (:comment, :status)'); 
-            $status = 'posted';
-            $stmt-> bindParam(':comment', $_POST['comment']);
-            $stmt-> bindParam(':status', $status);
-            $stmt->execute();
-            echo "Comment was a succsess";
-            }
-
-    }
-    catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-    $con = null;
-
+    #Initializing the comment view
+    $object = new Comment();
+    $object->New_comment();
     ?>
 
    
