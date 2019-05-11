@@ -1,5 +1,4 @@
 <?
-
 /* SOURCE OOP https://www.youtube.com/watch?v=B1_yi7HM0Cg */
 /* SOURCE php pdo form https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements?fbclid=IwAR3MXOtPOq5VJ8qxOqN1-WNBVNAZxYoE3xhgjDTtBXr-xmCOmdoItu5LI1c    -->
 /* SOURCE php security https://codeshack.io/secure-registration-system-php-mysql/     -->     */   

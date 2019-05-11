@@ -1,6 +1,6 @@
 <?php
 /* SOURCE Comments https://codingcyber.org/simple-php-comment-system-in-php-mysql-6604/ */
-
+/* SOURCE Comment-/replybox structure https://fribly.com/2014/10/29/pure-css-comments-box/ */
 
 #Getting the class for connecting to the sql database
 include_once('../Classes/connection.php');
@@ -13,127 +13,99 @@ class Comment {
     public function __construct() {
         $this->db = new Connection();
         $this->db = $this->db->dbConnect();
+
+        #IF user is not logged in, then they will be sendt to the login page
+        if(!isset($_SESSION["username"])) {
+            header("location: ../user/login.php");
+        }
+
     }  
     
     #Function for showing comments
     public function Comment_view() {
-    
 
-        #FJERNE MAIL FRA SKEJMA?!?!?!?!?!?!?!?!?!?!?!?!?!?!??!?????!!!! SESSION_USER ISTEDENFOR?!
-        $stmt = $this->db->prepare('SELECT * FROM comments WHERE status=:status'); 
-        $status = 'posted';
-        $stmt-> bindParam(':status', $status);
+        #Fetching the comments
+        $stmt = $this->db->prepare('SELECT * FROM comments'); 
         $stmt->execute();
         $all_comments = $stmt->fetchAll();
+
 
         #Making a for loop that iterates through the comments and prints them out
         for($r = 0; $r <= $stmt->rowcount()-1; $r++ ) {
         
             #Taking out the single comment and storing it
             $single_comment = $all_comments[$r];
+
+            #Selecting the userID from the comment
+            $comment_user_id = $single_comment["userID"];
+
+            #Selecting the username of the user that made the comment
+            $query = $this->db->prepare('SELECT * FROM users WHERE id = :userID'); 
+            $query-> bindParam(':userID', $comment_user_id);
+            $query->execute();
+            $user_that_commented = $query->fetchAll();
+            $user_array = $user_that_commented[0];
+            #Username of user that commented
+            $username_commentuser = $user_array["username"];
             
             ?> <br>  
 
-            <tr> 
-            <th scope="row"><?php echo $r['comID']; ?></th> 
-            <td><?php echo $single_comment['userID']; ?></td> 
-            <td><?php echo $single_comment['date'] ?></td> 
-            <td><?php echo $single_comment['comment'] ?></td> 
-            <td><a href="editcomment.php?id=<?php echo $single_comment['comID']; ?>">Edit</a> <a href="delcomment.php?id=<?php echo $single_comment['comID']; ?>">Delete</a></td> 
-            
-            <td><a href="reply_comment.php?id=<?php echo $single_comment['comID']; ?>">Reply</a></td>
-        
-            </tr>    
-        
-        <?php }
+            <link href="../comment/comment_view_style.css" rel="stylesheet" type="text/css"> <!-- Source for css -->
+
+            <!-- Main container -->
+            <div class="comments-container">
+                    <ul id="comments-list" class="comments-list">
+                        <li>
+                            <div class="comment-main-level">
+                                <!-- Comment container-->
+                                <div class="comment-box">
+                                    <div class="comment-head">
+                                        <h6 class="comment-name by-author"><h6>
+                                            User:<?php echo ' '. $username_commentuser; ?>
+                                        </h6> 
+                                        <span><?php echo $single_comment['date'] ?></span>
+                                    </div>
+                                    <div class="comment-content">
+                                    
+                                    <?php echo $single_comment['comment'] ?>
+                                    <a href="../moderator/editcomment.php?id=<?php echo $single_comment['comID']; ?>">Edit  </a> <a href="../moderator/delcomment.php?id=<?php echo $single_comment['comID']; ?>">Delete </a>
+                                    <a href="../reply/reply_comment.php?id=<?php echo $single_comment['comID']; ?>">Reply</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                </div>
+                
+         <?php 
+         
+        }
         
     
 
     
     } 
-
+    
     #Function for making comments
     public function New_comment() {
-    
-        #FJERNE MAIL FRA SKEJMA?!?!?!?!?!?!?!?!?!?!?!?!?!?!??!?????!!!! SESSION_USER ISTEDENFOR?!
+
+        #Fetching the userID of the session user
+        $username =  $_SESSION["username"];
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE username=:username'); 
+        $stmt-> bindParam(':username', $username);
+        $stmt->execute();
+        $all_user = $stmt->fetchAll();
+        $user_array = $all_user[0];
+        $user_id = $user_array["id"];
+
+
         #Checking if the user has completed the form
-        if(isset($_POST['name'],$_POST['email'], $_POST['comment'])) {
-            $stmt = $this->db->prepare('INSERT INTO comments (comment,status) VALUES (:comment, :status)'); 
-            $status = 'posted';
+        if(isset($_POST['comment'])) {
+            $stmt = $this->db->prepare('INSERT INTO comments (comment,userID) VALUES (:comment,:userID)'); 
             $stmt-> bindParam(':comment', $_POST['comment']);
-            $stmt-> bindParam(':status', $status);
+            $stmt-> bindParam(':userID', $user_id);
             $stmt->execute();
-            echo "Comment was a succsess";
+            echo "The posting of the comment was a succsess";
             }    
-    }
-
-    #Function for replying to comments
-    public function Reply_comment() {
-    
-        if (isset($_GET['id'])) {
-
-            $comID = $_GET['id']; 
-    
-            #Selecting the comment we are going to reply to
-            $stmt = $this->db->prepare('SELECT * FROM comments WHERE comID = :comID'); 
-            $stmt-> bindParam(':comID', $comID);
-            $stmt->execute();
-            $all_comments = $stmt->fetchAll();
-            
-            #Making a for loop that iterates through the comments and prints them out
-            for($r = 0; $r <= $stmt->rowcount()-1; $r++ ) {
-            
-                #Taking out the single comment and storing it
-                $single_comment = $all_comments[$r];
-                
-                ?> <br>  
-                <tr> <h3>Comment:</h3>
-                <th scope="row"><?php echo $r['comID']; ?></th> 
-                <td><?php echo $single_comment['userID']; ?></td> 
-                <td><?php echo $single_comment['date'] ?></td> 
-                <td><?php echo $single_comment['comment'] ?></td> 
-     
-                </tr>    
-    
-                <div class="commentedit">
-    
-                <!-- Latest compiled and minified CSS -->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-    
-                <div class="panel panel-default">
-                <div class="panel-heading">Replies:</div>
-                <div class="panel-heading">Her skal vi printe replies</div>
-
-                <div class="panel-body">
-                    <form method="post">
-                    <div class="form-group">
-                            <label for="InputReply">Reply</label>
-                            <textarea name="reply" class="form-control" rows="3"></textarea>
-                        </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
-                    </form>
-                </div>
-                </div>
-                </div>       
-    
-             <?php        }
-    
-                #INSERT INTO replies (:reply, comID) VALUES (:reply,:comID)')
-    
-            if(isset($_POST['reply'])) {
-                $stmt = $con->prepare('INSERT INTO replies SET reply = :reply, comID = :comID'); 
-                $stmt-> bindParam(':reply', $_POST['reply']);
-                $stmt-> bindParam(':comID', $comID);
-                $stmt->execute();
-                echo "Reply was a succsess";
-                }
-    
-            } else {
-                echo 'error please go back to member';
-            }
-    
-    
-            
     }
 
     #Function for editing comments
@@ -164,20 +136,45 @@ class Comment {
         if (isset($_GET['id'])) {
             #Getting the ID from the url
             $comID = $_GET['id']; 
+
+            #Saving the comment
+            $statement = $this->db->prepare('SELECT * FROM comments WHERE comID =:comID'); 
+            $statement-> bindParam(':comID', $comID);
+            $statement->execute();
+            $comment =  $statement->fetchAll();
+            $single_comment = $comment[0];
+            $comID = $single_comment["comID"];
+            $userID = $single_comment["userID"];
+            $date = $single_comment["date"];
+            $comment = $single_comment["comment"];
+
         
-            $stmt = $this->db->prepare('UPDATE comments SET status=:status WHERE comID = :comID'); 
-            $status = 'deleted';
-            $stmt-> bindParam(':status', $status);
+            #Inserting the reply into the "deleted" table
+            $query = $this->db->prepare('INSERT INTO deleted_comments SET comID = :comID, userID = :userID, date = :date, comment = :comment'); 
+            $query-> bindParam(':comID', $comID);
+            $query-> bindParam(':userID', $userID);
+            $query-> bindParam(':date', $date);
+            $query-> bindParam(':comment', $comment);
+            $query->execute();
+            echo '<a href="../user/member.php">Comment deleted, click here to go to member page</a>';
+
+
+            #Deleting the comment from the original table
+            $stmt = $this->db->prepare('DELETE FROM comments WHERE comID = :comID;'); 
             $stmt-> bindParam(':comID', $comID);
             $stmt->execute();
-    
-            echo "The comment has been removed";
-    
+
+
         } else {
             echo '<h1>Something went wrong, please try again</h1>';
-            echo '<a href="member.php">Go back to member page</a>';
+            echo '<a href="../user/member.php">Go back to member page</a>';
         }
-        }
+
+
+
+    
+    
+    }
 }
 
 

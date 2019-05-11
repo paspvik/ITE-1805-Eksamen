@@ -21,12 +21,16 @@
             <div class="panel-body">
                 <form method="post">
                     <div class="form-group">
-                        <label for="InputName">test</label>
-                        <input type="text" name="name" class="form-control" id="InputMail" placeholder="Name" required>
+                        <label for="Logged_in_as">You are logged in as:</label>
                     </div>
                         <div class="form-group">
-                        <label for="InputMail">test</label>
-                        <input type="text" name="email" class="form-control" id="InputMail" placeholder="Email" required>
+                        <label for="session_user"><?php session_start(); 
+                        if(isset($_SESSION["username"])) {
+                        echo $_SESSION["username"]; 
+                        }else {
+                            echo "No user is logged in";
+                            }
+                        ?></label>
                    </div>
                    <div class="form-group">
                         <label for="InputComment">Comment</label>
@@ -46,6 +50,7 @@
     #Initializing the comment view
     $object = new Comment();
     $object->New_comment();
+    $object->Comment_view();
     ?>
 
    

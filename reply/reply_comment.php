@@ -10,22 +10,14 @@
 
 <?php
  #Including the class
- include_once('../Classes/comment.php');
+ include_once('../Classes/reply.php');
 
  #Initializing the reply comment method
- $object = new Comment();
+ $object = new Reply();
  $object->reply_comment();
+ $object->reply_view();
+
 ?>
-
-
-
-
-
-
-
-
-
-
-    
+   
 </body>
 </html>

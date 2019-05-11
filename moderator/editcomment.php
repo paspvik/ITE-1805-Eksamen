@@ -34,6 +34,9 @@
  #Including the class
  include_once('../Classes/comment.php');
 
+ #Starting the session
+ session_start();
+
  #Initializing the edit comment method
  $object = new Comment();
  $object->Edit_comment();
