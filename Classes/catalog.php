@@ -32,9 +32,8 @@ class Catalog {
         $stmt->execute(); 
     }
 
-
+    //Displays all of the catalogs in a table
     public function viewAllCatalogs() {
-
             echo '<table border="1" cellspacing="" cellpadding=""> 
                 <tr> 
                     <th> <font face="Arial">Catalog ID</font> </td>
@@ -52,7 +51,7 @@ class Catalog {
             }
     }
 
-
+    //Gets catalogs names to use in selection menu
     public function viewCatalogs() {
         $get_catalogs = "SELECT cat_name FROM catalog";
         

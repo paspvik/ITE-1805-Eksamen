@@ -6,10 +6,10 @@
 
 /*
 Sources:		
-1. https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements			<--- uploader.php --->
+1. https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements		Also <--- uploader.php --->
 2. https://www.youtube.com/watch?v=JaRq73y5MJk
 3. http://www.mustbebuilt.co.uk/php/select-statements-with-pdo/
-4. https://www.siteground.com/tutorials/php-mysql/display-table-data/										<--uploader.php, singlefile.php-->
+4. https://www.siteground.com/tutorials/php-mysql/display-table-data/										Also <--uploader.php, singlefile.php-->
 5. https://stackoverflow.com/questions/8662535/trigger-php-function-by-clicking-html-link
 6. https://www.w3schools.com/w3css/w3css_tables.asp
 7. https://stackoverflow.com/questions/16222097/mysql-left-join-3-tables
@@ -24,7 +24,6 @@ global $view;
 
 class File {
 	private $db;
-	
 
 	
     public function __construct() {
@@ -158,15 +157,6 @@ class File {
 
 
 
-
-
-	//Function for deleting files
-	public function deleteFile($id){
-			$stmt = "DELETE FROM file where file_id = $id";
-			$result = $this->db->prepare($stmt);
-			$result->execute();
-		}
-
 	public function viewAllAccessLevels() {
 		$get_accesslevels = "SELECT access_level FROM file";
 			
@@ -175,7 +165,16 @@ class File {
 		}		
 	}	
 
-
+	public function incrementView($file_id){
+		$get_views = "SELECT views FROM file where file_id = $file_id";
+		$views = $this->db->query("$get_views")->fetch();
+		$views = (int)$views[0];
+		$inc_views = $views+1;
+		$stmt = $this->db->prepare("UPDATE file set views = :inc_views where file_id = $file_id");
+		$stmt->bindParam(':inc_views', $inc_views);
+		$stmt->execute();
+		
+	}
 }
 
 

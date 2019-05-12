@@ -29,6 +29,7 @@ if (isset($_GET['view'])) {
 <?php
     $file = new File();
 	$file->accessSingleFile($view);
+	$file->incrementView($view);
 	include_once("../comment/new_comment.php");
 	
 
