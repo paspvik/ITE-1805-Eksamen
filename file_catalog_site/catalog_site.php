@@ -11,6 +11,7 @@ error_reporting(0);
 <?php
     //Gets the cat_id from the link to create the variable to pass on to the viewByAccess function
     
+    
     #The IF is for a simple fix for the session problem
     if(isset($_SESSION["username"]))
     {   
@@ -20,10 +21,16 @@ error_reporting(0);
         $file->createLinks($level); 
     } else {
         $level = $_GET['level'];
-        session_start();
-        $file = new File();
-        $accsess_level = $file->get_access_level();
-        $file->createLinks($level);   
+        if ($level >= 2) {
+            echo "Sorry, you dont have the right access level";
+        } else {
+            $level = $_GET['level'];
+            session_start();
+            $file = new File();
+            $accsess_level = $file->get_access_level();
+            $file->createLinks($level);   
+        }
+
     }
  
 

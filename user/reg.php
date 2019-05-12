@@ -35,6 +35,13 @@
                 <a href="login.php">Login</a>
             </div>
 
+            <!-- Using the same css as above to save time -->
+            <div id="already_login">
+                    <br>
+                    <h1 class="account_text">Want to view open documents?</h1> 
+                    <a href="../file_catalog_site/catalog_site.php?level=1">Click here</a>
+            </div>
+
 
         <?php
         #Including the class
