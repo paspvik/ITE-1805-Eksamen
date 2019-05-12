@@ -117,7 +117,7 @@ class Comment {
             $stmt-> bindParam(':userID', $user_id);
             $stmt-> bindParam(':docno', $docno);
             $stmt->execute();
-            echo '<script>alert("The posting of the comment was a succsess, please refresh the page to see your");</script>'; 
+            echo '<script>alert("The posting of the comment was a success, please refresh the page to see your");</script>'; 
 
             }    
     }

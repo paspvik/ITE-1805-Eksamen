@@ -182,7 +182,7 @@ class Reply {
                     $stmt-> bindParam(':comID', $comID);
                     $stmt-> bindParam(':username', $username);
                     $stmt->execute();
-                    echo "Reply was a succsess";
+                    echo "Reply was a success";
                     }
         
                 } else {
