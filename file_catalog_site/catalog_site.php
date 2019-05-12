@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" type="text/css" href="file_uploader/table_styles.css">
+<link rel="stylesheet" type="text/css" href="../Classes/table_styles.css">
 
 <?php
 require '../Classes/file.php';
@@ -9,9 +9,23 @@ require '../Classes/file.php';
 <center>
 <?php
     //Gets the cat_id from the link to create the variable to pass on to the viewByAccess function
-    $level = $_GET['level'];
-    $file = new File();
-    $file->createLinks($level); 
+    
+    #The IF is for a simple fix for the session problem
+    if(isset($_SESSION["username"]))
+    {   
+        $level = $_GET['level'];
+        $file = new File();
+        $accsess_level = $file->get_access_level();
+        $file->createLinks($level); 
+    } else {
+        $level = $_GET['level'];
+        session_start();
+        $file = new File();
+        $accsess_level = $file->get_access_level();
+        $file->createLinks($level);   
+    }
+ 
+
 ?>
 
 <table border="1" cellspacing="" cellpadding=""> 

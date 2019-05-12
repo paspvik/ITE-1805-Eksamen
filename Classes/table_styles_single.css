@@ -1,0 +1,37 @@
+
+
+
+
+
+
+table {
+		vertical-align:top;
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  	border-collapse: collapse;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 999;
+		height: 23px;
+	  }
+	  
+	  td, th {
+		border: 1px solid #ddd;
+  		padding: 8px;
+	  }
+	
+
+	  tr:hover{
+		background-color: #ddd;
+	  }
+
+	  th{
+		padding-top: 12px;
+  		padding-bottom: 12px;
+ 		text-align: left;
+  		background-color: #32addd;
+ 		color: white;
+		}
+
+

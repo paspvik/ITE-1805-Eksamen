@@ -1,8 +1,9 @@
 
-<link rel="stylesheet" type="text/css" href="file_uploader/table_styles.css">
+<link rel="stylesheet" type="text/css" href="../Classes/table_styles_single.css">
 
 <?php
 require '../Classes/file.php';
+include_once('../Classes/comment.php')
 ?>
 
 
@@ -14,7 +15,7 @@ if (isset($_GET['view'])) {
 }
 ?>
 
-<table border="1" cellspacing="" cellpadding=""> 
+<table border="1" cellspacing="" cellpadding="" id="single"> 
     <tr> 
 	    <th> <font face="Arial">ID</font> </td>
 		<th> <font face="Arial">Filename</font> </td>  
@@ -27,7 +28,10 @@ if (isset($_GET['view'])) {
 
 <?php
     $file = new File();
-    $file->accessSingleFile($view);
+	$file->accessSingleFile($view);
+	include_once("../comment/new_comment.php");
+	
+
 ?>
 
 

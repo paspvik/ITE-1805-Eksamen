@@ -50,21 +50,17 @@ class Reply {
                 $one_comment = $all_comments[0];
                 $userID = $one_comment["userID"];
             
-                /*
-                #Fetching the username of the owner of the reply
-                $query = $this->db->prepare('SELECT * FROM users WHERE id = :userID'); 
-                $query-> bindParam(':userID', $userID);
-                $query->execute();
-                $user_that_commented = $query->fetchAll();
-                $user_array = $user_that_commented[0];
-                #Username of user that commented
-                $username_commentuser = $user_array["username"];
-                */
-
                 #Midlertidig løsning!!!!!!!!!!!!
                 $username = $single_comment["username"];
                 
                 $repID = $single_comment['RepID'];
+
+                #Fetching the access_level
+                #Dont have time to fix this issue
+                error_reporting(0);
+                require '../Classes/file.php';
+                $new_file = new File();
+                $access_level = $new_file->get_access_level();
                 
                 ?> <br>  
     
@@ -83,7 +79,9 @@ class Reply {
                                         </div>
                                         <div class="comment-content">
                                         <?php echo $single_comment['reply'] ?>
+                                        <?php if ($access_level >= 3) { ?>
                                         <a href="../moderator/editreply.php?id=<?php echo $repID; ?>">Edit  </a> <a href="../moderator/delreply.php?id=<?php echo $repID; ?>">Delete </a>
+                                        <?php } ?>
                                         </div>
                                     </div>
                                 </div>

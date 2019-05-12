@@ -15,7 +15,7 @@ https://www.w3schools.com/w3css/w3css_tables.asp
 https://stackoverflow.com/questions/16222097/mysql-left-join-3-tables
 */
 
-require 'connection.php';
+include_once('../Classes/connection.php');
 
 
 
@@ -29,7 +29,7 @@ class File {
 	
     public function __construct() {
         $this->db = new Connection();
-        $this->db = $this->db->dbConnect();
+		$this->db = $this->db->dbConnect();
     }
 
 
@@ -52,16 +52,33 @@ class File {
         }
 
 	
+	public function get_access_level(){
+		
+		$user = $_SESSION["username"];
+		$stmt = $this->db->prepare('SELECT access_level FROM users WHERE username= :username');
+		$stmt->bindParam(':username', $user); 
+		$stmt->execute();
+		$usernames = $stmt->fetchAll();
+		$array_user = $usernames[0]; #Choosing the first user in the array
+		$user_access_level = $array_user["access_level"]; #Saving the activation status
+
+		return $user_access_level;
+
+		}
+
+
 	public function createLinks($level){
-		$stmt = "SELECT * FROM catalog ";
+		$query = "SELECT * FROM catalog ";
 
 		#Gets all the catalog levels and creates a link that when clicked passes the access level to viewByAccess to display the files associated with that level
-		foreach($this->db->query($stmt) as $row){
+		foreach($this->db->query($query) as $row){
     	echo "</br>";
-   		echo  '<a href="' . 'catalog_site.php?level='. $row['cat_id'] . '">' .  "<td>{$row['cat_name']}</td>" . '</a>'; #Creates a link with the cat_id and stores the url variable.
+   		echo  '<a href="' . '../file_catalog_site/catalog_site.php?level='. $row['cat_id'] . '">' .  "<td>{$row['cat_name']}</td>" . '</a>'; #Creates a link with the cat_id and stores the url variable.
 		echo "</br>";
 				}	
 		}
+
+		
 
 
 
@@ -79,26 +96,27 @@ class File {
 				//The output of tags becomes an nested array which we need to iterate through
 				echo '<br>';
 				foreach($tags as $tag ){
+				#We are having som issues with the loop so we ignore them as a temporary solution
+				error_reporting("display_errors = 0");
 				return $tags[0][0].', '. $tags[1][0]. ', ' . $tags[2][0]. ', ' . $tags[3][0]. ', ' . $tags[4][0] ;
 				}
 			}
 
 
 		//When selecting a catalog pulls out data from the desired accesslevel
-		public function viewByAccess($level) {
-
+	public function viewByAccess($level) {
 
 		// Echo-ing all the files and their data from database
-		$stmt = "SELECT * FROM file where access_level = $level";
+		$stmt = "SELECT * FROM file where access_level <= $level";
 		$fil_id = "SELECT file_id FROM file";
+			
 		
-	
 		foreach($this->db->query($stmt) as $row){
 			//Create an variable to put inside of the echo to avoid escapes
 			$tags = $this->tagHandler($row['file_id']); 
 			echo
 			'<tr>'.
-			'<td>'. '<a href="singlepage.php?view='. $row['file_id'] . '">' .$row['file_id'] . '</a>'. '</td>'.
+			'<td>'. '<a href=../file_catalog_site/singlepage.php?view='. $row['file_id'] . '>' .$row['file_id'] . '</a>'. '</td>'.
 			'<td>'. $row['filename']. '</td>'. 
 			'<td>'. $row['description']. '</td>'. 
 			'<td>'. $row['author']. '</td>'. 
@@ -106,16 +124,16 @@ class File {
 			'<td>'. $row['timestamp']. '</td>'.
 			'<td>'. $row['data']. '</td>'. 
 			'</tr>';
-			
+				
 
-		}
+			}
 		}    
 
 
 
         
-		//Function for opening a single file
-		public function accessSingleFile($view) {
+	//Function for opening a single file
+	public function accessSingleFile($view) {
 		
 			// Echo-ing all the files in the database
 			$stmt = "SELECT * FROM file where file_id = $view";
@@ -140,15 +158,12 @@ class File {
 
 
 
-		//Function for deleting files
-		public function deleteFile($id){
+	//Function for deleting files
+	public function deleteFile($id){
 			$stmt = "DELETE FROM file where file_id = $id";
 			$result = $this->db->prepare($stmt);
 			$result->execute();
 		}
-
-
-				
 
 
 			}

@@ -25,7 +25,9 @@ class Comment {
     public function Comment_view() {
 
         #Fetching the comments
-        $stmt = $this->db->prepare('SELECT * FROM comments'); 
+        $docno = $_GET['view'];
+        $stmt = $this->db->prepare('SELECT * FROM comments where docno =:docno'); 
+        $stmt-> bindParam(':docno', $docno);
         $stmt->execute();
         $all_comments = $stmt->fetchAll();
 
@@ -47,6 +49,10 @@ class Comment {
             $user_array = $user_that_commented[0];
             #Username of user that commented
             $username_commentuser = $user_array["username"];
+
+            #Fetching the access_level
+            $new_file = new File();
+            $access_level = $new_file->get_access_level();
             
             ?> <br>  
 
@@ -68,8 +74,13 @@ class Comment {
                                     <div class="comment-content">
                                     
                                     <?php echo $single_comment['comment'] ?>
+   
+                                    <?php if ($access_level >= 3) { ?>
                                     <a href="../moderator/editcomment.php?id=<?php echo $single_comment['comID']; ?>">Edit  </a> <a href="../moderator/delcomment.php?id=<?php echo $single_comment['comID']; ?>">Delete </a>
                                     <a href="../reply/reply_comment.php?id=<?php echo $single_comment['comID']; ?>">Reply</a>
+                                    <?php } else { ?>
+                                        <a href="../reply/reply_comment.php?id=<?php echo $single_comment['comID']; ?>">Reply</a>
+                                    <?php  } ?>
                                     </div>
                                 </div>
                             </div>
@@ -100,11 +111,14 @@ class Comment {
 
         #Checking if the user has completed the form
         if(isset($_POST['comment'])) {
-            $stmt = $this->db->prepare('INSERT INTO comments (comment,userID) VALUES (:comment,:userID)'); 
+            $docno = $_GET['view'];
+            $stmt = $this->db->prepare('INSERT INTO comments (comment,userID,docno) VALUES (:comment,:userID,:docno)'); 
             $stmt-> bindParam(':comment', $_POST['comment']);
             $stmt-> bindParam(':userID', $user_id);
+            $stmt-> bindParam(':docno', $docno);
             $stmt->execute();
-            echo "The posting of the comment was a succsess";
+            echo '<script>alert("The posting of the comment was a succsess, please refresh the page to see your");</script>'; 
+
             }    
     }
 
@@ -156,7 +170,7 @@ class Comment {
             $query-> bindParam(':date', $date);
             $query-> bindParam(':comment', $comment);
             $query->execute();
-            echo '<a href="../user/member.php">Comment deleted, click here to go to member page</a>';
+            echo '<a href="../user/member.php?level=2">Comment deleted, click here to go to member page</a>';
 
 
             #Deleting the comment from the original table

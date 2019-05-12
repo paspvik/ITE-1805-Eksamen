@@ -50,7 +50,7 @@ class User {
                         //login was succsessful
                         session_start();
                         $_SESSION["username"] = $_POST["username"];
-                        header("location:member.php");
+                        header("location:member.php?level=2");
                     }
 
                     else {
@@ -172,7 +172,7 @@ class User {
        session_start();
   
        if(isset($_SESSION["username"])) {
-
+            #Saving the users activation code
            $stmt = $this->db->prepare('SELECT * FROM users WHERE username= :username');
            $stmt->bindParam(':username', $_SESSION["username"]); 
            $stmt->execute();
@@ -186,6 +186,12 @@ class User {
                #Login was successful
                echo '<h3>Login Success, Welcome - '.$_SESSION["username"].'</h3>';
                echo '</br><br /><a href = "logout.php">Logout</a>';
+               echo '<center><h1>All files you have access to is displayed below</h1></center>';
+            
+
+               include_once("../file_catalog_site/catalog_site.php");
+
+
            } else {
 
                #Login was not successful

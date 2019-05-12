@@ -12,7 +12,11 @@
 <!-- SOURCE Commentbox https://codingcyber.org/simple-php-comment-system-in-php-mysql-6604/ -->
 
 <div class="comment">
-
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <!-- Latest compiled and minified CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 
@@ -49,8 +53,9 @@
 
     #Initializing the comment view
     $object = new Comment();
-    $object->New_comment();
     $object->Comment_view();
+    $object->New_comment();
+    
     ?>
 
    
