@@ -1,7 +1,7 @@
 
 
 <?php
-    require 'file_uploader/catalog.php'; 
+    require '../Classes/catalog.php'; 
 ?>
 
 

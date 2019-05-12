@@ -2,7 +2,7 @@
 
 
 <?php
-require 'file_uploader/tag.php';
+require '../Classes/tag.php';
 $tag = new Tag();
 ?>
 

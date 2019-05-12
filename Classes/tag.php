@@ -5,7 +5,7 @@
 #https://phpdelusions.net/pdo_examples/select
 #https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page
 
-require 'file_uploader/connection.php';
+require 'connection.php';
 
 class Tag {
 	private $db;

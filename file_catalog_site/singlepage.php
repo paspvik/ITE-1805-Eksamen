@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="file_uploader/table_styles.css">
 
 <?php
-require 'file_uploader/file.php';
+require '../Classes/file.php';
 ?>
 
 

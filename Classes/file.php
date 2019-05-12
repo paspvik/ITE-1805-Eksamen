@@ -15,7 +15,7 @@ https://www.w3schools.com/w3css/w3css_tables.asp
 https://stackoverflow.com/questions/16222097/mysql-left-join-3-tables
 */
 
-require 'file_uploader/connection.php';
+require 'connection.php';
 
 
 
@@ -58,7 +58,7 @@ class File {
 		#Gets all the catalog levels and creates a link that when clicked passes the access level to viewByAccess to display the files associated with that level
 		foreach($this->db->query($stmt) as $row){
     	echo "</br>";
-   		echo  '<a href="' . 'catalog.php?level='. $row['cat_id'] . '">' .  "<td>{$row['cat_name']}</td>" . '</a>'; #Creates a link with the cat_id and stores the url variable.
+   		echo  '<a href="' . 'catalog_site.php?level='. $row['cat_id'] . '">' .  "<td>{$row['cat_name']}</td>" . '</a>'; #Creates a link with the cat_id and stores the url variable.
 		echo "</br>";
 				}	
 		}

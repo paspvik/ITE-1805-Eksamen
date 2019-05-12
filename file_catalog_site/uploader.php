@@ -1,7 +1,7 @@
 
 
 <?php
-require 'file_uploader/file.php';
+require '../Classes/file.php';
 ?>
 
 

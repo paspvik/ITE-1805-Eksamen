@@ -2,7 +2,7 @@
 
 
 <?php
-require 'file_uploader/connection.php';
+require 'connection.php';
 
 
 
