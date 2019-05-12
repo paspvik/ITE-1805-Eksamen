@@ -2,6 +2,7 @@
 
 <?php
 require '../Classes/file.php';
+$file = new File();
 ?>
 
 
@@ -11,16 +12,26 @@ require '../Classes/file.php';
 <html>
 	<body>
 	<form action="uploader.php" method="post" enctype="multipart/form-data">
-		Description: <input type="text" name="description"><br>
-		Author: <input type="text" name="author"><br>
-		File: <input type="file" name="file"> <br>
 		
-		<button type="submit" name="upload"> Upload </button>
+		<label> Description: </label>  
+			<input type="text" name="description"><br>
+		<label> Author:</label> 
+			<input type="text" name="author"><br>
+		<label> Access Level: </label>
+			<select name="access_level">
+				<option value= 1> 1 </option>
+				<option value= 2> 2 </option>
+			</select>
+		<br>
+		<label>File:</label>  
+			<input type="file" name="file"> <br>
+		
+		<button type="submit" name="btn_submit" value= "upload"> Upload </button>
 	</form>
 	</body>
+
 </html>
 	<?php
-		$file = new File();
 		$file->uploadForm();    
 	?>
 </div>

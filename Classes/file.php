@@ -35,17 +35,18 @@ class File {
 
     public function uploadForm() {
 
-        $stmt = $this->db->prepare("INSERT INTO file (filename, description, author, data, timestamp) VALUES (:filename, :description, :author, :data, NOW())");
+        $stmt = $this->db->prepare("INSERT INTO file (filename, description, author, access_level, data, timestamp) VALUES (:filename, :description, :author, :access_level, :data, NOW())");
         $stmt->bindParam(':filename', $filename);
         $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':author', $author);
+		$stmt->bindParam(':author', $author);
+		$stmt->bindParam(':access_level', $access_level);
         $stmt->bindParam(':data', $data);
     
     
         $filename = $_FILES["file"]["name"];
         $description = $_POST["description"];
         $author = $_POST["author"];
-
+		$access_level = $_POST["access_level"];
         $data = $_FILES['file']['tmp_name'];
         $timestamp = $_POST['timestamp'];
         $stmt->execute(); 
@@ -165,8 +166,16 @@ class File {
 			$result->execute();
 		}
 
+	public function viewAllAccessLevels() {
+		$get_accesslevels = "SELECT access_level FROM file";
+			
+		foreach($this->db->query($get_accesslevels) as $row) {
+			echo "<option>". $row['access_level']. "</option>";
+		}		
+	}	
 
-			}
+
+}
 
 
 ?>
