@@ -50,7 +50,7 @@ class User {
                         //login was succsessful
                         session_start();
                         $_SESSION["username"] = $_POST["username"];
-                        header("location:member.php?level=2");
+                        header("location:member.php?level=1");
                     }
 
                     else {

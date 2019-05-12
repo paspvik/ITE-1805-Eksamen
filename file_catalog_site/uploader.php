@@ -16,8 +16,6 @@ error_reporting(0);
 		
 		<label> Description: </label>  
 			<input type="text" name="description"><br>
-		<label> Author:</label> 
-			<input type="text" name="author"><br>
 		<label> Access Level: </label>
 			<select name="access_level">
 				<option value= 1> 1 </option>
@@ -33,7 +31,9 @@ error_reporting(0);
 
 </html>
 	<?php
+	if (isset($_POST["btn_submit"])){
 		$file->uploadForm();    
+	}
 	?>
 </div>
 

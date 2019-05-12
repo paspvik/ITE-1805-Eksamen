@@ -34,22 +34,23 @@ class File {
 
 
     public function uploadForm() {
-
+		session_start();
         $stmt = $this->db->prepare("INSERT INTO file (filename, description, author, access_level, data, timestamp) VALUES (:filename, :description, :author, :access_level, :data, NOW())");
         $stmt->bindParam(':filename', $filename);
         $stmt->bindParam(':description', $description);
-		$stmt->bindParam(':author', $author);
+		$stmt->bindParam(':author', $user);
 		$stmt->bindParam(':access_level', $access_level);
         $stmt->bindParam(':data', $data);
     
     
         $filename = $_FILES["file"]["name"];
-        $description = $_POST["description"];
-        $author = $_POST["author"];
+		$description = $_POST["description"];
+		$user = $_SESSION["username"];
 		$access_level = $_POST["access_level"];
         $data = $_FILES['file']['tmp_name'];
         $timestamp = $_POST['timestamp'];
-        $stmt->execute(); 
+		$stmt->execute(); 
+		echo '<script>alert("Document upload was a success");</script>'; 
         }
 
 	
@@ -108,7 +109,7 @@ class File {
 	public function viewByAccess($level) {
 
 		// Echo-ing all the files and their data from database
-		$stmt = "SELECT * FROM file where access_level <= $level";
+		$stmt = "SELECT * FROM file where access_level = $level";
 		$fil_id = "SELECT file_id FROM file";
 			
 		
