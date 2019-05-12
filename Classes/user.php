@@ -196,9 +196,11 @@ class User {
                echo '<h3>Login Success, Welcome - '.$_SESSION["username"].'</h3>';
                echo '</br><br /><a href = "logout.php">Logout</a>';
                echo '<center><h1>All files you have access to is displayed below</h1></center>';
+               echo "<center> Click <a href='../file_catalog_site/uploader.php'>here</a> to add a document</center>" ;
                
                if($access_level >=3){
                 echo "<center> Click <a href='../file_catalog_site/catalog_creator.php'>here</a> for admin catalog functions</center>" ;
+                echo "<center> Click <a href='../file_catalog_site/tag_manager.php'>here</a> for admin tag functions</center>" ;
                 echo "<br>";
 
                 
