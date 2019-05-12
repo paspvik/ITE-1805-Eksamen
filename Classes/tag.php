@@ -1,9 +1,14 @@
 
 
 <?php
-#https://www.youtube.com/watch?v=a_PYf-6Ze40
-#https://phpdelusions.net/pdo_examples/select
-#https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page
+
+/*
+Sources:
+1. https://www.youtube.com/watch?v=a_PYf-6Ze40
+2. https://phpdelusions.net/pdo_examples/select
+3. https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page
+
+*/
 
 require 'connection.php';
 
