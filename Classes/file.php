@@ -5,11 +5,11 @@
 
 
 /*
-Sources:
-1. https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements
+Sources:		
+1. https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements			<--- uploader.php --->
 2. https://www.youtube.com/watch?v=JaRq73y5MJk
 3. http://www.mustbebuilt.co.uk/php/select-statements-with-pdo/
-4. https://www.siteground.com/tutorials/php-mysql/display-table-data/
+4. https://www.siteground.com/tutorials/php-mysql/display-table-data/										<--uploader.php, singlefile.php-->
 5. https://stackoverflow.com/questions/8662535/trigger-php-function-by-clicking-html-link
 6. https://www.w3schools.com/w3css/w3css_tables.asp
 7. https://stackoverflow.com/questions/16222097/mysql-left-join-3-tables
