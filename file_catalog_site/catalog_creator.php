@@ -2,10 +2,14 @@
 
 <?php
 	require '../Classes/catalog.php'; 
-	$catalog = new Catalog();
+    $catalog = new Catalog();
+    require '../Classes/file.php';
+    session_start();
+    $new_file = new File();
+    $access_level = $new_file->get_access_level();
 ?>
 
-
+<?php if ($access_level >= 3) {  ?>
 
 <h1> Create catalogs</h1>
 
@@ -72,3 +76,5 @@
 			$catalog->viewAllCatalogs();
 		?>
 </div>
+
+<?php } ?>

@@ -182,12 +182,27 @@ class User {
 
            #Checks if user has status activated
            if($array_user_activation == 'activated') {
+               
+               #Fetching access_level
+               $user = $_SESSION["username"];
+               $stmt = $this->db->prepare('SELECT access_level FROM users WHERE username= :username');
+               $stmt->bindParam(':username', $user); 
+               $stmt->execute();
+               $usernames = $stmt->fetchAll();
+               $array_user = $usernames[0]; #Choosing the first user in the array
+               $access_level = $array_user["access_level"]; #Saving the activation status
 
                #Login was successful
                echo '<h3>Login Success, Welcome - '.$_SESSION["username"].'</h3>';
                echo '</br><br /><a href = "logout.php">Logout</a>';
                echo '<center><h1>All files you have access to is displayed below</h1></center>';
-            
+               
+               if($access_level >=3){
+                echo "<center> Click <a href='../file_catalog_site/catalog_creator.php'>here</a> for admin catalog functions</center>" ;
+                echo "<br>";
+
+                
+               }
 
                include_once("../file_catalog_site/catalog_site.php");
 
