@@ -107,7 +107,7 @@ class User {
 
                     /* SOURCE PHPMAILER -  https://github.com/PHPMailer/PHPMailer/blob/master/examples/gmail.phps */
 
-                        $activate_link = 'INSERT_ROOT_HOST_ADDRESS/user/activate_mail.php?email=' . $email . '&code=' . $uniqid; #Activation link
+                        $activate_link = 'ADD_HOST_ADRESS/user/activate_mail.php?email=' . $email . '&code=' . $uniqid; #Activation link
                         $message = '<p>Please click the following link to activate your account: <a href="' . $activate_link . '">' . $activate_link . '</a></p>'; #Email message
                         
                         require 'PHPMailer/PHPMailerAutoload.php';

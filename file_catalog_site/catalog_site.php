@@ -39,7 +39,7 @@ session_start();
 
 <table border="1" cellspacing="" cellpadding=""> 
     <tr> 
-	    <th> <font face="Arial">ID </td>
+	    <th> <font face="Arial">ID</font> </td>
 		<th> <font face="Arial">Filename</font> </td>  
 		<th> <font face="Arial">Description</font> </td> 
 		<th> <font face="Arial">Author</font> </td> 

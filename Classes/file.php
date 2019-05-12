@@ -9,7 +9,7 @@ Sources:
 1. https://stackoverflow.com/questions/44771540/how-to-insert-form-data-into-pdo-using-prepared-statements		Also <--- uploader.php --->
 2. https://www.youtube.com/watch?v=JaRq73y5MJk
 3. http://www.mustbebuilt.co.uk/php/select-statements-with-pdo/
-4. https://www.siteground.com/tutorials/php-mysql/display-table-data/										Also <--uploader.php, singlefile.php, catalog_site.php-->
+4. https://www.siteground.com/tutorials/php-mysql/display-table-data/										Also <--uploader.php, singlefile.php-->
 5. https://stackoverflow.com/questions/8662535/trigger-php-function-by-clicking-html-link
 6. https://www.w3schools.com/w3css/w3css_tables.asp
 7. https://stackoverflow.com/questions/16222097/mysql-left-join-3-tables
@@ -31,7 +31,7 @@ class File {
 		$this->db = $this->db->dbConnect();
     }
 
-	//Function that takes in data from the form on uploader.php and uploads the data and the file
+
     public function uploadForm() {
 		session_start();
         $stmt = $this->db->prepare("INSERT INTO file (filename, description, author, access_level, data, timestamp) VALUES (:filename, :description, :author, :access_level, :data, NOW())");
@@ -53,7 +53,6 @@ class File {
         }
 
 	
-	//Getting the accsess_level of the user
 	public function get_access_level(){
 		
 		$user = $_SESSION["username"];
@@ -69,7 +68,6 @@ class File {
 		}
 
 
-	//Creates clickable links based on catalog names
 	public function createLinks($level){
 		$query = "SELECT * FROM catalog ";
 
@@ -101,12 +99,12 @@ class File {
 				foreach($tags as $tag ){
 				#We are having som issues with the loop so we ignore them as a temporary solution
 				error_reporting("display_errors = 0");
-				return $tags[0][0].', '. $tags[1][0]. ', ' . $tags[2][0]. ', ' . $tags[3][0]. ', ' . $tags[4][0] ; // Prints maximum of 5 tags since i couldn't figure out how to loop properly
+				return $tags[0][0].', '. $tags[1][0]. ', ' . $tags[2][0]. ', ' . $tags[3][0]. ', ' . $tags[4][0] ;
 				}
 			}
 
 
-	//When selecting a catalog pulls out data from the desired accesslevel
+		//When selecting a catalog pulls out data from the desired accesslevel
 	public function viewByAccess($level) {
 
 		// Echo-ing all the files and their data from database
@@ -158,7 +156,7 @@ class File {
 
 
 
-	//Shows all the accesslevels
+
 	public function viewAllAccessLevels() {
 		$get_accesslevels = "SELECT access_level FROM file";
 			
@@ -167,7 +165,6 @@ class File {
 		}		
 	}	
 
-	//Takes the current amount of view and adds one to it
 	public function incrementView($file_id){
 		$get_views = "SELECT views FROM file where file_id = $file_id";
 		$views = $this->db->query("$get_views")->fetch();

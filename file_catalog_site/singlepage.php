@@ -9,7 +9,7 @@ include_once('../Classes/comment.php')
 
 
 <?php
-//gets variable passe by clicking on the id in the catalog_site
+
 if (isset($_GET['view'])) {
     $view = $_GET['view'];
 }
@@ -29,7 +29,7 @@ if (isset($_GET['view'])) {
 <?php
     $file = new File();
 	$file->accessSingleFile($view);
-	$file->incrementView($view); 
+	$file->incrementView($view);
 	include_once("../comment/new_comment.php");
 	
 
