@@ -55,6 +55,7 @@ error_reporting(0);
 <?php $tag->viewAllTags(); ?>
 
 <?php
+//checks which button is pressed
     if($_REQUEST['btn_submit']=="new_tag"){
         $tag->createTag();
     }

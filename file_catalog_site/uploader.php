@@ -31,6 +31,7 @@ error_reporting(0);
 
 </html>
 	<?php
+	//checks if the submit button is pressed and uploads the file and data to the table
 	if (isset($_POST["btn_submit"])){
 		$file->uploadForm();    
 	}

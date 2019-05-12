@@ -4,9 +4,9 @@
 
 /*
 Sources:
-1. https://www.youtube.com/watch?v=a_PYf-6Ze40
+1. https://www.youtube.com/watch?v=a_PYf-6Ze40                                            Also <--- tag_manager.php, catalog_site --->
 2. https://phpdelusions.net/pdo_examples/select
-3. https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page    <--- tag_manager.php --->
+3. https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page   Also  <--- tag_manager.php, catalog_site --->
 */
 
 require 'connection.php';
@@ -21,7 +21,7 @@ class Tag {
         $this->db = $this->db->dbConnect();
     }
 
-
+    //Creates an new tag
     public function createTag() {
         $stmt = $this->db->prepare("INSERT INTO tags (tag_name) VALUES (:new_tag)");
         $stmt->bindParam(':new_tag', $new_tag);
@@ -31,7 +31,7 @@ class Tag {
     }
 
 
-
+    //Displays tagnames to use in the selection menu
     public function viewTagNames() {
         $get_tags = "SELECT tag_name FROM tags";
         
@@ -41,7 +41,7 @@ class Tag {
     }
 
 
-
+    //Displays filenames to use in the selection menu
     public function viewFileNames() {
         $get_files = $stmt = "SELECT filename FROM file";
 
@@ -51,17 +51,17 @@ class Tag {
     }
 
 
-
+    //Adds tags to file
     public function addTag() {
         
         $file_name = $_POST['file_name']; // Gets filename from selectionmenu
         $tag_name  = $_POST['tag_name']; // Gets tagname from selectionmenu
 
     
-        $get_tag_id = "SELECT tag_id FROM tags WHERE tag_name = '$tag_name'" ;  //bind
-        $get_file_id = "SELECT file_id FROM file WHERE filename = '$file_name'" ; //bind
+        $get_tag_id = "SELECT tag_id FROM tags WHERE tag_name = '$tag_name'" ;  
+        $get_file_id = "SELECT file_id FROM file WHERE filename = '$file_name'" ; 
         
-        $stmt = $this->db->prepare("INSERT INTO file_tag_id (file_id, tag_id) VALUES (:file_id, :tag_id)");
+        $stmt = $this->db->prepare("INSERT INTO file_tag_id (file_id, tag_id) VALUES (:file_id, :tag_id)"); 
         
         $tag_id = $this->db->query("$get_tag_id")->fetch();
         $file_id = $this->db->query("$get_file_id")->fetch();
@@ -77,7 +77,7 @@ class Tag {
         
     }
 
-
+    //Deletes the selected tag
     public function deleteTag() {
         $tag_name = $_POST['tag_name']; 
         $get_tag_id = "SELECT tag_id FROM tags WHERE tag_name = '$tag_name'" ; 
@@ -90,7 +90,7 @@ class Tag {
     }
 
 
-
+    //Shows all the tags in a table
     public function viewAllTags() {
 
         echo '<table border="1" cellspacing="" cellpadding=""> 

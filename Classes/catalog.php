@@ -59,7 +59,7 @@ class Catalog {
             echo "<option>". $row['cat_name']. "</option>";
         }
     }
-
+    //Gets catalogs id's to use in selection menu
     public function viewCatalogID() {
         $get_catalog_id = "SELECT cat_id FROM catalog";
         
@@ -68,7 +68,7 @@ class Catalog {
         }
     }
 
-
+    //Deletes the selected catalog
     public function deleteCatalog(){
         $cat_name = $_POST['cat_name']; // Gets filename from selectionmenu
         $get_cat_id = "SELECT cat_id FROM catalog WHERE cat_name = '$cat_name'" ; 
@@ -82,7 +82,7 @@ class Catalog {
 
     }
 
-
+    //Changes the ID of an catalog
     public function changeCatalogID(){
 
         $cat_name = $_POST['cat_name']; // Gets filename from selectionmenu
