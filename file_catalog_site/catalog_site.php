@@ -3,6 +3,7 @@
 
 <?php
 require '../Classes/file.php';
+error_reporting(0);
 ?>
 
 

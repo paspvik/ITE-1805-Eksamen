@@ -7,6 +7,7 @@
     session_start();
     $new_file = new File();
     $access_level = $new_file->get_access_level();
+    error_reporting(0);
 ?>
 
 <?php if ($access_level >= 3) {  ?>

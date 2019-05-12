@@ -4,6 +4,7 @@
 <?php
 require '../Classes/tag.php';
 $tag = new Tag();
+error_reporting(0);
 ?>
 
 
